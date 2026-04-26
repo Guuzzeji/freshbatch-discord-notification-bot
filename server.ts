@@ -1,13 +1,18 @@
+import dotenv from "dotenv";
 import express from "express";
+import bodyParser from "body-parser";
+
+import { createJobsNotification } from "./discord-webhook";
 import { verifyWebhookPackage } from "./utils";
 
 import type { Job } from "./types";
-import { createJobsNotification } from "./discord-webhook";
 
+dotenv.config();
 const PORT = process.env.PORT || 3232;
 const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET || "";
 
 const app = express();
+app.use(bodyParser.json());
 
 app.post("/webhook", async (req: express.Request, res: express.Response) => {
   const receivedSig = req.headers["webhook-signature"] as string | undefined;
@@ -18,6 +23,7 @@ app.post("/webhook", async (req: express.Request, res: express.Response) => {
   // Assuming the payload is in the expected format, otherwise this will throw an error which will be caught below
   try {
     const jobs: Job[] = req.body?.data ?? [];
+    console.log("Invalid signature. Payload:", req.body);
 
     if (!verifyWebhookPackage(jobs, WEBHOOK_SECRET, receivedSig)) {
       return res.status(401).json({ error: "Invalid signature" });

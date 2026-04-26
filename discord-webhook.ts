@@ -1,12 +1,14 @@
-const { WebhookClient, EmbedBuilder } = require("discord.js");
+import dotenv from "dotenv";
+import { WebhookClient, EmbedBuilder } from "discord.js";
 
+dotenv.config();
 const WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL || "";
 
-function createDiscordWebhookClient(): any {
+function createDiscordWebhookClient(): WebhookClient {
   return new WebhookClient({ url: WEBHOOK_URL });
 }
 
-function createJobsEmbed(jobs: any[]): any {
+function createJobsEmbed(jobs: any[]): EmbedBuilder {
   const embed = new EmbedBuilder()
     .setColor(0x0099ff)
     .setTitle("New Job Postings")
