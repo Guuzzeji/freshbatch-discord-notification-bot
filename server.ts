@@ -40,10 +40,12 @@ app.use(
 app.post("/webhook", async (req: express.Request, res: express.Response) => {
   const requestId = String(res.getHeader("x-request-id") || "");
   const receivedSig = req.headers["webhook-signature"] as string | undefined;
+  const payload = req.body;
   if (!receivedSig) {
     log("warn", "webhook.rejected.missing_signature", {
       requestId,
       path: req.originalUrl,
+      payload,
       jobCount: Array.isArray(req.body?.data) ? req.body.data.length : 0,
     });
     return res.status(401).json({ error: "Missing signature" });
@@ -55,6 +57,8 @@ app.post("/webhook", async (req: express.Request, res: express.Response) => {
     log("info", "webhook.received", {
       requestId,
       path: req.originalUrl,
+      payload,
+      signature: receivedSig,
       hasSignature: true,
       jobCount: jobs.length,
     });
@@ -63,6 +67,8 @@ app.post("/webhook", async (req: express.Request, res: express.Response) => {
       log("warn", "webhook.rejected.invalid_signature", {
         requestId,
         path: req.originalUrl,
+        payload,
+        signature: receivedSig,
         jobCount: jobs.length,
       });
       return res.status(401).json({ error: "Invalid signature" });
@@ -72,6 +78,8 @@ app.post("/webhook", async (req: express.Request, res: express.Response) => {
     log("info", "webhook.delivered", {
       requestId,
       path: req.originalUrl,
+      payload,
+      signature: receivedSig,
       jobCount: jobs.length,
     });
   } catch (error) {
@@ -79,6 +87,8 @@ app.post("/webhook", async (req: express.Request, res: express.Response) => {
     log("error", "webhook.failed", {
       requestId,
       path: req.originalUrl,
+      payload,
+      signature: receivedSig,
       error: message,
     });
     return res.status(500).json({ error: "Internal server error" });
