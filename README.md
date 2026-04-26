@@ -41,10 +41,12 @@ If the signature is missing or invalid, the request is rejected with 401.
 
 Create a .env.local file in the project root:
 
+```
 PORT=3232
 WEBHOOK_SECRET=your_shared_secret
 DISCORD_WEBHOOK_URL=https://discord.com/api/webhooks/...
 SERVER_URL=http://localhost:3232
+```
 
 Notes:
 
