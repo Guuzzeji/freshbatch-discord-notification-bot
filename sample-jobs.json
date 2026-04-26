@@ -1,0 +1,48 @@
+[
+  {
+    "is_test": true,
+    "is_fte": true,
+    "is_intern": false,
+    "company_name": "Google",
+    "title": "Software Engineer - Backend",
+    "date_posted": 1704067200000,
+    "url": "https://google.com/careers/backend-engineer",
+    "source": "freshbatch-test",
+    "degrees": [
+      "BS Computer Science",
+      "MS Computer Science",
+      "PhD Computer Science"
+    ],
+    "sponsorship": "Available",
+    "locations": ["Mountain View, CA", "Remote"],
+    "category": "Engineering"
+  },
+  {
+    "is_test": true,
+    "is_fte": true,
+    "is_intern": false,
+    "company_name": "Meta",
+    "title": "Product Manager",
+    "date_posted": 1704153600000,
+    "url": "https://meta.com/careers/product-manager",
+    "source": "freshbatch-test",
+    "degrees": ["BS Business", "BS Computer Science"],
+    "sponsorship": "Not Available",
+    "locations": ["Menlo Park, CA"],
+    "category": "Product"
+  },
+  {
+    "is_test": true,
+    "is_fte": false,
+    "is_intern": true,
+    "company_name": "Microsoft",
+    "title": "Software Engineering Intern",
+    "date_posted": 1704240000000,
+    "url": "https://microsoft.com/careers/intern",
+    "source": "freshbatch-test",
+    "degrees": ["BS Computer Science"],
+    "sponsorship": "Available",
+    "locations": ["Redmond, WA", "Seattle, WA"],
+    "category": "Engineering"
+  }
+]

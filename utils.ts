@@ -2,7 +2,7 @@ import { createHmac, timingSafeEqual } from "crypto";
 import type { Job } from "./types";
 
 // Recursively sort object keys — replicates Python's sort_keys=True
-function sortObjectKeys(obj: unknown): unknown {
+export function sortObjectKeys(obj: unknown): unknown {
   if (Array.isArray(obj)) return obj.map(sortObjectKeys);
   if (obj !== null && typeof obj === "object") {
     return Object.fromEntries(
