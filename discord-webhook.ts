@@ -25,13 +25,27 @@ function createJobsEmbed(jobs: any[]): EmbedBuilder {
   return embed;
 }
 
+function chunkJobs(jobs: any[], chunkSize: number): any[][] {
+  const chunks: any[][] = [];
+
+  for (let i = 0; i < jobs.length; i += chunkSize) {
+    chunks.push(jobs.slice(i, i + chunkSize));
+  }
+
+  return chunks;
+}
+
 export async function createJobsNotification(jobs: any[]): Promise<void> {
   const webhookClient = createDiscordWebhookClient();
-  const embed = createJobsEmbed(jobs);
+  const jobChunks = chunkJobs(jobs, 24);
 
-  await webhookClient.send({
-    content: "New job postings have been added!",
-    username: "FreshBatch Bot",
-    embeds: [embed],
-  });
+  for (const chunk of jobChunks) {
+    const embed = createJobsEmbed(chunk);
+
+    await webhookClient.send({
+      content: "New job postings have been added!",
+      username: "FreshBatch Bot",
+      embeds: [embed],
+    });
+  }
 }
