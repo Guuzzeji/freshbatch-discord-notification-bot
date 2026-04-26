@@ -1,6 +1,24 @@
 import { createHmac, timingSafeEqual } from "crypto";
 import type { Job } from "./types";
 
+export type LogLevel = "info" | "warn" | "error";
+
+export function log(
+  level: LogLevel,
+  message: string,
+  metadata: Record<string, unknown> = {},
+): void {
+  const entry = {
+    ts: new Date().toISOString(),
+    level,
+    env: process.env.NODE_ENV || "development",
+    message,
+    ...metadata,
+  };
+
+  console.log(JSON.stringify(entry));
+}
+
 // Recursively sort object keys — replicates Python's sort_keys=True
 export function sortObjectKeys(obj: unknown): unknown {
   if (Array.isArray(obj)) return obj.map(sortObjectKeys);
